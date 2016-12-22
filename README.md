@@ -5,7 +5,7 @@
 
 Machines are atomic, context-free bits of code which conform to the [machine specification](http://node-machine.org/spec/machine): an open standard for functions and subroutines.
 
-### License
+## License
 
 MIT
 
