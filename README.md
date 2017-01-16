@@ -5,8 +5,18 @@
 
 Machines are atomic, context-free bits of code which conform to the [machine specification](http://node-machine.org/spec/machine): an open standard for functions and subroutines.
 
+## Help
+
+If you have questions or are having trouble, click [here](http://sailsjs.com/support).
+
+## Contributing
+Please observe the guidelines and conventions laid out in the [Sails project contribution guide](http://sailsjs.com/documentation/contributing) when opening issues or submitting pull requests.
+
+[![NPM](https://nodei.co/npm/machine.png)](https://nodei.co/npm/machine/)
+
+
 ## License
 
-MIT
+The Node Machine specification, like the [Sails framework](http://sailsjs.com), is free and open-source under the [MIT License](http://sailsjs.com/license).
 
-&copy; 2014 Mike McNeil; &copy; 2015 The Treeline Company
+&copy; 2014 Mike McNeil; &copy; 2015-2016 The Treeline Company; &copy; 2017 The Sails Company
