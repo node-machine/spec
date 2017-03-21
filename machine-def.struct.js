@@ -152,7 +152,7 @@ module.exports = {
   //   badPopulates: { description: 'Invalid `populates`.' },
   // },
   // implementationType: 'classic',
-  // fn: function(criteria, populates, eachRecord, done, meta, miscQKs) {
+  // fn: function(criteria, populates, handleEachRecord, done) {
   //   var flaverr = require('flaverr');
   //
   //   var numRecordsStreamed = 0;
