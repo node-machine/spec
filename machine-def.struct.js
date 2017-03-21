@@ -144,7 +144,11 @@ module.exports = {
   // > • Since `sync` is not enabled, special syntax like `done()` is REQUIRED in the `args` list
   // > • Since `sync` is not enabled, the return value is ignored.  In the incident of a caught exception (key word "CAUGHT" -- careful in your callbacks!), the `error` exit is assumed, and triggered automatically.
   // ```
-  // args: ['criteria','populates','handleEachRecord','done()'],
+  // friendlyName: 'For each user...',
+  // args: [
+  //   ['criteria','populates','handleEachRecord','done()'],
+  //   ['criteria','handleEachRecord','done()'],
+  // ],
   // inputs: { /*...*/ },
   // exits: {
   //   success:  { outputFriendlyName: 'Num streamed', outputExample: 3 },
@@ -152,13 +156,28 @@ module.exports = {
   //   badPopulates: { description: 'Invalid `populates`.' },
   // },
   // implementationType: 'classic',
-  // fn: function(criteria, populates, handleEachRecord, done) {
+  // fn: function(criteria, populatesOrHandleEachRecord, handleEachRecordOrDone, doneMaybe) {
+  //   var _ = require('lodash');
   //   var flaverr = require('flaverr');
   //
+  //   // If there are only 3 arguments, then we know `populates` must have been omitted.
+  //   // (so shift everything over as needed)
+  //   var done;
+  //   var handleEachRecord;
+  //   if (_.isUndefined(done)) {
+  //     done = handleEachRecordOrDone;
+  //     handleEachRecord = populatesOrHandleEachRecord;
+  //   }
+  //   else {
+  //     done = doneMaybe;
+  //     handleEachRecord = handleEachRecordOrDone;
+  //   }
+  //
   //   var numRecordsStreamed = 0;
-  //   this.model.stream(criteria, populates)
+  //   User.stream(criteria, populates)
   //   .eachRecord(function(record, next){
   //     handleEachRecord(record);
+  //     numRecordsStreamed++;
   //     return next();
   //   })
   //   .exec(function (err) {
@@ -170,6 +189,44 @@ module.exports = {
   //     }
   //     else if (err) { return done(err); } // << misc. (===`error` exit)
   //     else { return done(undefined, numRecordsStreamed); }
+  //   });
+  // }
+  // ```
+  //
+  // For reference, here's an equivalent way to write the same example as above:
+  // (equivalent from a usage perspective, anyway)
+  // ```
+  // friendlyName: 'For each user...',
+  // args: [
+  //   ['criteria','populates','handleEachRecord','done()'],
+  //   ['criteria','handleEachRecord','done()'],
+  // ],
+  // inputs: { /*...*/ },
+  // exits: { /*...*/ },
+  // (Notice we removed the `implementationType`!)
+  // fn: function (inputs, exits) {
+  //
+  //   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  //   // Note that variadics are take care of automatically by our runner
+  //   // when it maps the incoming data over to this implementation type. 
+  //   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+  //
+  //   var numRecordsStreamed = 0;
+  //   User.stream(inputs.criteria, inputs.populates)
+  //   .eachRecord(function(record, next){
+  //     inputs.handleEachRecord(record);
+  //     numRecordsStreamed++;
+  //     return next();
+  //   })
+  //   .exec(function (err) {
+  //     if (err && err.name === 'UsageError' && err.code === 'E_BAD_CRITERIA') {
+  //       return exits.badCriteria(err);
+  //     }
+  //     if (err && err.name === 'UsageError' && err.code === 'E_BAD_POPULATES') {
+  //       return exits.badPopulates(err);
+  //     }
+  //     else if (err) { return done(err); } // << misc. (===`error` exit)
+  //     else { return exits.success(numRecordsStreamed); }
   //   });
   // }
   // ```
