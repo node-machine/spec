@@ -3,7 +3,7 @@ module.exports = {
   friendlyName: 'Do something',
 
 
-  description: 'Do a thing (should be <=80 characters written in the imperative mood)',
+  description: 'Do a thing (should be <=140 characters written in the imperative mood)',
 
 
   extendedDescription: 'Longer description. Markdown syntax supported.',
