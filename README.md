@@ -19,4 +19,4 @@ Please observe the guidelines and conventions laid out in the [Sails project con
 
 The Node Machine specification, like the [Sails framework](http://sailsjs.com), is free and open-source under the [MIT License](http://sailsjs.com/license).
 
-&copy; 2014 Mike McNeil; &copy; 2015-2016 The Treeline Company; &copy; 2017 The Sails Company
+&copy; 2014-present Mike McNeil
